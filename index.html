@@ -1,39 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dorm Planner</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+    }
+    img {
+      max-width: 150px;
+      margin-top: 10px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+    }
+    .section {
+      margin: 30px 0;
+    }
+  </style>
 </head>
 <body>
   <h1>Dorm Planner App</h1>
-  <h2>Create your Character!</h2>
+  <h2>Create Your Character</h2>
 
-  <iframe 
-    src="https://www.avatarsinpixels.com/chibi/clothing/Body"
-    width="100%" 
-    height="600" 
-    style="border: 2px solid #ccc; border-radius: 10px;" 
-    title="Avatars in Pixels">
-  </iframe>
+  <div class="section">
+    <p>Open the avatar maker in a new tab:</p>
+    <a href="https://www.avatarsinpixels.com" target="_blank">
+      <button>Open Avatar Maker</button>
+    </a>
+  </div>
 
-  <a href="schedule.html">
-    <button>Next</button>
-  </a>
-  <h2>Press the "Share" button (Tape) then Paste Your Avatar Link</h2>
-<input type="text" id="avatarLink" placeholder="Paste your avatar PNG link here">
-<button onclick="showAvatar()">Submit</button>
-<br><br>
-<img id="avatarPreview" src="" alt="Your Avatar" style="display:none; width:150px; border:1px solid #ccc; border-radius:10px;"/>
+  <div class="section">
+    <h3>Paste Your Avatar Image Link</h3>
+    <input type="text" id="avatarLink" placeholder="Paste image link here">
+    <button onclick="showAvatarFromLink()">Preview</button>
+  </div>
 
-<script>
-  function showAvatar() {
-    const link = document.getElementById("avatarLink").value;
-    const img = document.getElementById("avatarPreview");
-    img.src = link;
-    img.style.display = "block";
-  }
-</script>
+  <div class="section">
+    <h3>Or Upload Your Avatar PNG</h3>
+    <input type="file" id="avatarUpload" accept="image/png">
+  </div>
+
+  <img id="avatarPreview" src="" alt="Avatar Preview" style="display: none;"/>
+
+  <div class="section">
+    <a href="schedule.html">
+      <button>Next</button>
+    </a>
+  </div>
+
+  <script>
+    function showAvatarFromLink() {
+      const link = document.getElementById("avatarLink").value;
+      if (link) {
+        const img = document.getElementById("avatarPreview");
+        img.src = link;
+        img.style.display = "block";
+      }
+    }
+
+    document.getElementById("avatarUpload").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function() {
+          const img = document.getElementById("avatarPreview");
+          img.src = reader.result;
+          img.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
 </body>
 </html>
