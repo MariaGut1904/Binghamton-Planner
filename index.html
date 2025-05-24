@@ -21,5 +21,19 @@
   <a href="schedule.html">
     <button>Next</button>
   </a>
+  <h2>Press the "Share" button (Tape) then Paste Your Avatar Link</h2>
+<input type="text" id="avatarLink" placeholder="Paste your avatar PNG link here">
+<button onclick="showAvatar()">Submit</button>
+<br><br>
+<img id="avatarPreview" src="" alt="Your Avatar" style="display:none; width:150px; border:1px solid #ccc; border-radius:10px;"/>
+
+<script>
+  function showAvatar() {
+    const link = document.getElementById("avatarLink").value;
+    const img = document.getElementById("avatarPreview");
+    img.src = link;
+    img.style.display = "block";
+  }
+</script>
 </body>
 </html>
