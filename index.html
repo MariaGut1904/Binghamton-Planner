@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <head>
+  <style>
+    body {
+      background-color: pink;
+    }
+  </style>
+</head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dorm Planner</title>
@@ -43,12 +50,6 @@
     <input type="text" id="avatarLink" placeholder="Paste image link here">
     <button onclick="showAvatarFromLink()">Preview</button>
   </div>
-
-  <div class="section">
-    <h3>Or Upload Your Avatar PNG</h3>
-    <input type="file" id="avatarUpload" accept="image/png">
-  </div>
-
   <img id="avatarPreview" src="" alt="Avatar Preview" style="display: none;"/>
 
   <div class="section">
