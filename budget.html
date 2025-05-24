@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dorm Planner - Budget</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="budget.html">Budget Tracker</a>
+    <a href="schedule.html">Schedule Planner</a>
+  </nav>
+
+  <h1>Budget Tracker</h1>
+  <form>
+    <label for="item">Item:</label>
+    <input type="text" id="item" name="item" required />
+
+    <label for="cost">Cost ($):</label>
+    <input type="number" id="cost" name="cost" required />
+
+    <button type="submit">Add</button>
+  </form>
+
+  <ul id="budget-list"></ul>
+  <p>Total: $<span id="total">0</span></p>
+
+  <script src="script.js"></script>
+</body>
+</html>
