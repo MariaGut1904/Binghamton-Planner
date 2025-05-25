@@ -1,85 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <head>
-  <style>
-    body {
-      background-color: pink;
-    }
-  </style>
-</head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dorm Planner</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      padding: 20px;
-      text-align: center;
-    }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-    }
-    img {
-      max-width: 150px;
-      margin-top: 10px;
-      border: 2px solid #ccc;
-      border-radius: 10px;
-    }
-    .section {
-      margin: 30px 0;
-    }
-  </style>
+  <title>My Avatar Builder</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Dorm Planner App</h1>
-  <h2>Create Your Character</h2>
+  <h1>My Avatar Builder</h1>
 
-  <div class="section">
-    <p>Open the avatar maker in a new tab:</p>
-    <a href="https://www.avatarsinpixels.com" target="_blank">
-      <button>Open Avatar Maker</button>
-    </a>
+  <div class="avatar-container">
+    <img id="base-body" src="https://www.avatarsinpixels.com/chibi/5/174813224011814/avatar.png" alt="Base Body" />
+    <img id="hairLower" src="" alt="Hair Lower" />
+    <img id="eyes" src="" alt="Eyes" />
+    <img id="eyebrows" src="" alt="Eyebrows" />
+    <img id="hairTop" src="" alt="Hair Top" />
   </div>
 
-  <div class="section">
-    <h3>Paste Your Avatar Image Link</h3>
-    <input type="text" id="avatarLink" placeholder="Paste image link here">
-    <button onclick="showAvatarFromLink()">Preview</button>
+  <div class="controls">
+    <div class="control-group">
+      <button onclick="cycleOption('hairLower', -1)">← Hair Lower</button>
+      <button onclick="cycleOption('hairLower', 1)">Hair Lower →</button>
+    </div>
+    <div class="control-group">
+      <button onclick="cycleOption('hairTop', -1)">← Hair Top</button>
+      <button onclick="cycleOption('hairTop', 1)">Hair Top →</button>
+    </div>
+    <div class="control-group">
+      <button onclick="cycleOption('eyes', -1)">← Eyes</button>
+      <button onclick="cycleOption('eyes', 1)">Eyes →</button>
+    </div>
+    <div class="control-group">
+      <button onclick="cycleOption('eyebrows', -1)">← Eyebrows</button>
+      <button onclick="cycleOption('eyebrows', 1)">Eyebrows →</button>
+    </div>
   </div>
-  <img id="avatarPreview" src="" alt="Avatar Preview" style="display: none;"/>
 
-  <div class="section">
-    <a href="schedule.html">
-      <button>Next</button>
-    </a>
-  </div>
-
-  <script>
-    function showAvatarFromLink() {
-      const link = document.getElementById("avatarLink").value;
-      if (link) {
-        const img = document.getElementById("avatarPreview");
-        img.src = link;
-        img.style.display = "block";
-      }
-    }
-
-    document.getElementById("avatarUpload").addEventListener("change", function(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function() {
-          const img = document.getElementById("avatarPreview");
-          img.src = reader.result;
-          img.style.display = "block";
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
