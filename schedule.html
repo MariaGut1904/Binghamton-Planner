@@ -2,40 +2,138 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dorm Planner - Schedule</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Simple Schedule Planner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    input[type="date"], input[type="text"] {
+      flex: 1;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      background: #fff;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .task-info {
+      font-size: 0.95rem;
+    }
+    .delete-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="budget.html">Budget Tracker</a>
-    <a href="schedule.html">Schedule Planner</a>
-  </nav>
 
   <h1>Schedule Planner</h1>
-  <table border="1">
-    <thead>
-      <tr>
-        <th>Time</th>
-        <th>Monday</th>
-        <th>Tuesday</th>
-        <th>Wednesday</th>
-        <th>Thursday</th>
-        <th>Friday</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>8-9 AM</td>
-        <td contenteditable></td><td contenteditable></td><td contenteditable></td><td contenteditable></td><td contenteditable></td>
-      </tr>
-      <tr>
-        <td>9-10 AM</td>
-        <td contenteditable></td><td contenteditable></td><td contenteditable></td><td contenteditable></td><td contenteditable></td>
-      </tr>
-      <!-- Add more rows as needed -->
-    </tbody>
-  </table>
+
+  <form id="taskForm">
+    <input type="date" id="taskDate" required />
+    <input type="text" id="taskDesc" placeholder="Enter task description" required />
+    <button type="submit">Add</button>
+  </form>
+
+  <ul id="taskList"></ul>
+
+  <script>
+    const taskForm = document.getElementById('taskForm');
+    const taskDate = document.getElementById('taskDate');
+    const taskDesc = document.getElementById('taskDesc');
+    const taskList = document.getElementById('taskList');
+
+    // Load tasks from localStorage on page load
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    renderTasks();
+
+    // Add new task
+    taskForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const date = taskDate.value;
+      const desc = taskDesc.value.trim();
+
+      if (!date || !desc) return;
+
+      tasks.push({ date, desc });
+      saveTasks();
+      renderTasks();
+
+      taskForm.reset();
+    });
+
+    // Render tasks in the list
+    function renderTasks() {
+      taskList.innerHTML = '';
+
+      if (tasks.length === 0) {
+        taskList.innerHTML = '<li>No tasks scheduled</li>';
+        return;
+      }
+
+      tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <div class="task-info">
+            <strong>${task.date}</strong>: ${task.desc}
+          </div>
+          <button class="delete-btn" data-index="${index}">X</button>
+        `;
+        taskList.appendChild(li);
+      });
+
+      // Add event listeners to delete buttons
+      const deleteButtons = document.querySelectorAll('.delete-btn');
+      deleteButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const index = button.getAttribute('data-index');
+          tasks.splice(index, 1);
+          saveTasks();
+          renderTasks();
+        });
+      });
+    }
+
+    // Save tasks to localStorage
+    function saveTasks() {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+  </script>
+
 </body>
 </html>
