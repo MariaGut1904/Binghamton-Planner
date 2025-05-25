@@ -1,43 +1,53 @@
-let total = 0;
+const hairLowerOptions = [
+  "https://www.avatarsinpixels.com/chibi/HairLower/1/thumbnail.png",
+  "https://www.avatarsinpixels.com/chibi/HairLower/2/thumbnail.png",
+  "https://www.avatarsinpixels.com/chibi/HairLower/4/thumbnail.png",
+  "https://www.avatarsinpixels.com/chibi/HairLower/12/thumbnail.png",
+  "https://www.avatarsinpixels.com/chibi/HairLower/7/thumbnail.png"
+];
 
-function addBudgetItem() {
-  const item = document.getElementById("item").value;
-  const cost = parseFloat(document.getElementById("cost").value);
+const hairTopOptions = [
+  "https://i.imgur.com/7LOCuaR.png",
+  "https://i.imgur.com/UGbdXJI.png",
+  "https://www.avatarsinpixels.com/chibi/HairTop/5/thumbnail.png",
+  "https://www.avatarsinpixels.com/chibi/HairTop/6/thumbnail.png"
+];
 
-  if (item && !isNaN(cost)) {
-    const li = document.createElement("li");
-    li.textContent = `${item}: $${cost}`;
-    document.getElementById("budget-list").appendChild(li);
+const eyesOptions = [
+  "https://www.avatarsinpixels.com/chibi/Eyes/0/thumbnail.png",
+  "https://www.avatarsinpixels.com/chibi/Eyes/1/thumbnail.png"
+];
 
-    total += cost;
-    document.getElementById("total").textContent = total.toFixed(2);
+const eyebrowOptions = [
+  "https://www.avatarsinpixels.com/chibi/Eyebrows/0/thumbnail.png",
+  "https://www.avatarsinpixels.com/chibi/Eyebrows/1/thumbnail.png"
+];
 
-    document.getElementById("item").value = "";
-    document.getElementById("cost").value = "";
-  }
+let indexes = {
+  hairLower: 0,
+  hairTop: 0,
+  eyebrows: 0,
+  eyes: 0
+};
+
+function cycleOption(part, direction) {
+  let options;
+  if (part === "hairLower") options = hairLowerOptions;
+  else if (part === "hairTop") options = hairTopOptions;
+  else if (part === "eyebrows") options = eyebrowOptions;
+  else if (part === "eyes") options = eyesOptions;
+
+  indexes[part] += direction;
+
+  if (indexes[part] < 0) indexes[part] = options.length - 1;
+  else if (indexes[part] >= options.length) indexes[part] = 0;
+
+  document.getElementById(part).src = options[indexes[part]];
 }
 
-function addEvent() {
-  const date = document.getElementById("event-date").value;
-  const name = document.getElementById("event-name").value;
-
-  if (date && name) {
-    const li = document.createElement("li");
-    li.textContent = `${date}: ${name}`;
-    document.getElementById("event-list").appendChild(li);
-
-    document.getElementById("event-date").value = "";
-    document.getElementById("event-name").value = "";
-  }
-}
-
-function addFurniture() {
-  const item = document.getElementById("furniture-item").value;
-  if (item) {
-    const li = document.createElement("li");
-    li.textContent = item;
-    document.getElementById("furniture-list").appendChild(li);
-
-    document.getElementById("furniture-item").value = "";
-  }
-}
+window.onload = () => {
+  document.getElementById("hairLower").src = hairLowerOptions[0];
+  document.getElementById("hairTop").src = hairTopOptions[0];
+  document.getElementById("eyebrows").src = eyebrowOptions[0];
+  document.getElementById("eyes").src = eyesOptions[0];
+};
